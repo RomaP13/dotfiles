@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-panel" version="1.0">
+  <property name="configver" type="empty"/>
+  <property name="panels" type="empty">
+    <property name="panel-1" type="empty">
+      <property name="position" type="string" value="p=6;x=960;y=17"/>
+      <property name="length" type="double" value="100"/>
+      <property name="position-locked" type="bool" value="true"/>
+      <property name="size" type="uint" value="25"/>
+      <property name="background-style" type="uint" value="1"/>
+      <property name="background-alpha" type="empty"/>
+      <property name="enter-opacity" type="uint" value="75"/>
+      <property name="leave-opacity" type="uint" value="75"/>
+      <property name="plugin-ids" type="array">
+        <value type="int" value="1"/>
+        <value type="int" value="2"/>
+        <value type="int" value="14"/>
+        <value type="int" value="3"/>
+        <value type="int" value="18"/>
+        <value type="int" value="17"/>
+        <value type="int" value="4"/>
+        <value type="int" value="5"/>
+        <value type="int" value="6"/>
+        <value type="int" value="7"/>
+        <value type="int" value="21"/>
+        <value type="int" value="8"/>
+        <value type="int" value="16"/>
+        <value type="int" value="15"/>
+        <value type="int" value="9"/>
+        <value type="int" value="10"/>
+        <value type="int" value="11"/>
+        <value type="int" value="12"/>
+        <value type="int" value="13"/>
+      </property>
+      <property name="autohide-behavior" type="uint" value="0"/>
+      <property name="mode" type="uint" value="0"/>
+      <property name="disable-struts" type="bool" value="false"/>
+      <property name="background-rgba" type="array">
+        <value type="double" value="0.015686274509803907"/>
+        <value type="double" value="0.0039215686274509795"/>
+        <value type="double" value="0.039215686274509803"/>
+        <value type="double" value="1"/>
+      </property>
+    </property>
+    <property name="dark-mode" type="bool" value="false"/>
+  </property>
+  <property name="plugins" type="empty">
+    <property name="plugin-1" type="empty"/>
+    <property name="plugin-2" type="empty"/>
+    <property name="plugin-3" type="empty">
+      <property name="items" type="array">
+        <value type="string" value="17130217621.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-4" type="empty">
+      <property name="items" type="array">
+        <value type="string" value="17332250941.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-5" type="empty">
+      <property name="items" type="array">
+        <value type="string" value="17130217633.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-6" type="empty">
+      <property name="show-handle" type="empty"/>
+      <property name="middle-click" type="empty"/>
+    </property>
+    <property name="plugin-7" type="empty">
+      <property name="expand" type="bool" value="true"/>
+      <property name="style" type="empty"/>
+    </property>
+    <property name="plugin-8" type="empty">
+      <property name="names-visible" type="empty"/>
+      <property name="show-frame" type="empty"/>
+      <property name="known-items" type="array">
+        <value type="string" value="deluge"/>
+        <value type="string" value="psensor"/>
+        <value type="string" value="com.dec05eba.gpu_screen_recorder"/>
+        <value type="string" value="Onboard"/>
+        <value type="string" value="steam"/>
+        <value type="string" value="droidcam"/>
+        <value type="string" value="4K Video Downloader+"/>
+        <value type="string" value="7a6e28d0-1671-11ef-9f61-1574d3b677f9"/>
+        <value type="string" value="qBittorrent"/>
+        <value type="string" value="obs"/>
+        <value type="string" value="SimpleScreenRecorder"/>
+        <value type="string" value="96245910-fc03-11ee-9166-e7efbc94515c"/>
+        <value type="string" value="zoom"/>
+        <value type="string" value="vlc"/>
+        <value type="string" value="chrome_status_icon_1"/>
+        <value type="string" value="TelegramDesktop"/>
+      </property>
+      <property name="known-legacy-items" type="array">
+        <value type="string" value="droidcam"/>
+        <value type="string" value="vlc"/>
+        <value type="string" value="networkmanager applet"/>
+      </property>
+    </property>
+    <property name="plugin-9" type="empty"/>
+    <property name="plugin-10" type="empty"/>
+    <property name="plugin-11" type="empty"/>
+    <property name="plugin-12" type="empty">
+      <property name="enable-keyboard-shortcuts" type="empty"/>
+      <property name="enable-mpris" type="empty"/>
+      <property name="mixer-command" type="empty"/>
+      <property name="show-notifications" type="empty"/>
+      <property name="mpris-players" type="string" value="chromium.instance2;firefox.instance_1_656;io.github.celluloid_player.Celluloid.instance-1;kdeconnect.mpris_0f9edf6746ea43268352651758b7d3d2;kdeconnect.mpris_18aa8f02e01a45b3960c110d2a6c17e3;kdeconnect.mpris_2b8ca07a9ecd42f3b5512eb4d5821e5b;kdeconnect.mpris_2d4dec3a538142dcb7b525ef0f88e60d;kdeconnect.mpris_5ef62588184b442fb3b1bbc6c7da417f;kdeconnect.mpris_95f8fb2af8df48f0a549dfdd964eb095;kdeconnect.mpris_973b8d8e80f447249ac6c5733edb1117;org.telegram.desktop._023d4009d7ff6bfa2363e883ec2f16df.Sandboxed.instance-18;smplayer;spotify;spotube.instance29666;spotube.instance29941;spotube.instance31716;spotube.instance32519;spotube.instance32756;spotube.instance33261;spotube.instance33461;TelegramDesktop;vlc;vlc.instance12401;vlc.instance13209;vlc.instance14372;vlc.instance18798;vlc.instance21049;vlc.instance22345;vlc.instance22786;vlc.instance32139;vlc.instance33151;vlc.instance33743;vlc.instance34936;vlc.instance3874;vlc.instance40581;vlc.instance40606;vlc.instance49041;vlc.instance49625;vlc.instance52308;vlc.instance58754;vlc.instance60537;vlc.instance64639;vlc.instance65499;vlc.instance65972;vlc.instance66131;vlc.instance69699;vlc.instance69830;vlc.instance70136;vlc.instance80166;vlc.instance80424;vlc.instance80694"/>
+    </property>
+    <property name="plugin-13" type="empty">
+      <property name="digital-time-format" type="string" value="%H:%M:%S"/>
+      <property name="digital-layout" type="empty"/>
+      <property name="digital-date-font" type="empty"/>
+      <property name="digital-time-font" type="empty"/>
+      <property name="mode" type="uint" value="2"/>
+      <property name="digital-date-format" type="string" value="%d/%m/%Y"/>
+    </property>
+    <property name="plugin-14" type="empty"/>
+    <property name="plugin-15" type="string" value="xkb">
+      <property name="display-type" type="uint" value="2"/>
+      <property name="display-name" type="uint" value="1"/>
+    </property>
+    <property name="plugin-16" type="string" value="systemload">
+      <property name="swap" type="empty">
+        <property name="enabled" type="bool" value="false"/>
+      </property>
+      <property name="network" type="empty">
+        <property name="enabled" type="bool" value="true"/>
+      </property>
+      <property name="memory" type="empty">
+        <property name="color" type="array">
+          <value type="double" value="0.75294117647058822"/>
+          <value type="double" value="0.10980392156862745"/>
+          <value type="double" value="0.15686274509803921"/>
+          <value type="double" value="1"/>
+        </property>
+      </property>
+      <property name="timeout" type="uint" value="1000"/>
+      <property name="uptime" type="empty">
+        <property name="enabled" type="bool" value="true"/>
+      </property>
+    </property>
+    <property name="plugin-18" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="17130267961.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-17" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="17348532501.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-21" type="string" value="pager"/>
+  </property>
+</channel>
