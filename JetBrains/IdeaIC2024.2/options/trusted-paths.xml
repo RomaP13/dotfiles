@@ -1,0 +1,26 @@
+<application>
+  <component name="Trusted.Paths">
+    <option name="TRUSTED_PROJECT_PATHS">
+      <map>
+        <entry key="$USER_HOME$/Projects/TEsting" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-1-RomaP13" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-2-RomaP13" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-3-RomaP13" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-4-RomaP13" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-5-RomaP13" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-6-RomaP13" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-6-RomaP13/list" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-7-RomaP13" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-8-RomaP13" value="true" />
+        <entry key="$USER_HOME$/Projects/lab-9-RomaP13" value="true" />
+      </map>
+    </option>
+  </component>
+  <component name="Trusted.Paths.Settings">
+    <option name="TRUSTED_PATHS">
+      <list>
+        <option value="$USER_HOME$/Projects" />
+      </list>
+    </option>
+  </component>
+</application>
