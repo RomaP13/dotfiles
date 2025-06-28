@@ -40,17 +40,15 @@ customCommands:
         initialValue: ""
     command: "git checkout -b {{.Form.BranchType}}/{{.Form.BranchName}}"
     loadingText: "Creating branch"
-
   - key: "U"
     description: "Update committer date with author date"
     context: "commits"
-    stream: true
     prompts:
       - type: "confirm"
         title: "Update the committer date for new commits in the current branch"
         body: "You're trying to update the committer date for all commits in the current branch with the author date. Are you sure?"
     command: "git rebase --committer-date-is-author-date $(git merge-base main HEAD)"
-
+    output: log
 git:
   merging:
     args: "--no-ff"
