@@ -42,7 +42,22 @@ alias ll='ls -alF'
 alias ls='ls --color=auto'
 alias n='nvim'
 
-alias nvimrc='nvim ~/.config/nvim'
-alias zh='nvim ~/.dotfiles/.zshrc'
-alias kittyrc='nvim ~/.dotfiles/.config/kitty/kitty.conf'
-alias hyprc='nvim ~/.dotfiles/.config/hypr/hyprland.conf'
+nvimrc() {
+  cd ~/.config/nvim && nvim .
+  cd ~
+}
+
+zh() {
+  cd ~/.dotfiles && nvim .zshrc
+  cd ~
+}
+
+kittyrc() {
+  cd ~/.dotfiles/.config/kitty && nvim kitty.conf
+  cd ~
+}
+
+hyprc() {
+  cd ~/.dotfiles/.config/hypr/ && nvim hyprland.conf
+  cd ~
+}
