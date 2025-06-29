@@ -1,20 +1,17 @@
 {
   "position": "top",
   "modules-left": ["hyprland/workspaces"],
-  "modules-right": ["memory", "temperature", "disk", "pulseaudio", "clock"],
+  "modules-right": [
+    "temperature", // CPU temp
+    "custom/gpu_temp", // GPU temp
+    "memory", // RAM usage
+    "disk", // Disk usage
+    "pulseaudio", // Volume & mute
+    "clock" // Date & time
+  ],
 
-  // Show memory usage
-  "memory": {
-    "format": " {used:0.1f}G/{total:0.1f}G",
-    "interval": 5,
-  },
-
-  // Show CPU temperature
+  // ————— CPU Temperature (built‑in) —————
   "temperature": {
-    // Use thermal-zone if you know the correct index:
-    // "thermal-zone": 1,
-
-    // Or better: use hwmon path
     "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
     "critical-threshold": 85,
     "format": "{temperatureC}°C ",
@@ -23,24 +20,40 @@
     "interval": 30,
   },
 
-  "disk": {
+  // ————— GPU Temperature (custom) —————
+  "custom/gpu_temp": {
+    "format": " {}°C",
+    "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader",
     "interval": 30,
-    "format": "{free}",
-    "path": "/",
   },
 
+  // ————— Memory Usage (built‑in) —————
+  "memory": {
+    "format": " {used:0.1f}G/{total:0.1f}G",
+    "interval": 5,
+  },
+
+  // ————— Disk Usage (built‑in) —————
+  "disk": {
+    "path": "/",
+    "format": " {free}",
+    "interval": 60,
+  },
+
+  // ————— PulseAudio (Volume & Mute) —————
   "pulseaudio": {
     "format": "{icon}  {volume}%",
-    "format-muted": "",
+    "format-muted": " muted",
     "format-icons": {
-      "default": ["", "", " "],
+      "default": ["", "", ""],
     },
-    "max-volume": 110,
     "on-click": "pavucontrol",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
   },
 
+  // ————— Clock (+ tooltip calendar) —————
   "clock": {
-    "format": "<span foreground='#f5c2e7'> </span>{:%A, %d %B %Y %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "<span></span> {:%A, %d %B %Y %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
   },
 }

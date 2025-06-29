@@ -54,19 +54,13 @@ button:hover {
   background-color: #eb4d4b;
 }
 
-#pulseaudio,
-#clock,
-#battery,
-#cpu,
+#temperature,
+#custom-gpu_temp,
 #memory,
 #disk,
-#temperature,
-#backlight,
-#wireplumber,
-#tray,
-#network,
-#mode,
-#scratchpad {
+#pulseaudio,
+#clock,
+#tray {
   margin-top: 2px;
   margin-bottom: 2px;
   margin-left: 4px;
@@ -75,14 +69,24 @@ button:hover {
   padding-right: 4px;
 }
 
-#clock {
-  color: @maroon;
-  border-bottom: 2px solid @maroon;
+#temperature {
+  color: @red;
+  border-bottom: 2px solid @red;
 }
 
-#clock.date {
-  color: @mauve;
-  border-bottom: 2px solid @mauve;
+#custom-gpu_temp {
+  color: @teal;
+  border-bottom: 2px solid @teal;
+}
+
+#memory {
+  color: @green;
+  border-bottom: 2px solid @green;
+}
+
+#disk {
+  color: @yellow;
+  border-bottom: 2px solid @yellow;
 }
 
 #pulseaudio {
@@ -90,24 +94,18 @@ button:hover {
   border-bottom: 2px solid @blue;
 }
 
-#network {
-  color: @yellow;
-  border-bottom: 2px solid @yellow;
+#clock {
+  /* color: @maroon; */
+  /* border-bottom: 2px solid @maroon; */
+
+  color: @mauve;
+  border-bottom: 2px solid @mauve;
 }
 
-#idle_inhibitor {
-  margin-right: 12px;
-  color: #7cb342;
-}
-
-#idle_inhibitor.activated {
-  color: @red;
-}
-
-#battery {
-  color: @green;
-  border-bottom: 2px solid @green;
-}
+/* #clock.date { */
+/*   color: @mauve; */
+/*   border-bottom: 2px solid @mauve; */
+/* } */
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
@@ -117,11 +115,4 @@ button:hover {
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right > widget:last-child > #workspaces {
   margin-right: 0;
-}
-
-#custom-vpn {
-  color: @lavender;
-  border-radius: 15px;
-  padding-left: 6px;
-  padding-right: 6px;
 }
