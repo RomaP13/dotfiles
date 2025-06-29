@@ -2,6 +2,7 @@
   "position": "top",
   "modules-left": ["hyprland/workspaces"],
   "modules-right": [
+    "tray",
     "temperature", // CPU temp
     "custom/gpu_temp", // GPU temp
     "memory", // RAM usage
@@ -10,6 +11,11 @@
     "clock" // Date & time
   ],
 
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+
   // ————— CPU Temperature (built‑in) —————
   "temperature": {
     "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
@@ -17,27 +23,27 @@
     "format": " {temperatureC}°C",
     "format-critical": " {temperatureC}°C",
     "tooltip-format": "CPU Temp: {temperatureC}°C",
-    "interval": 30,
+    "interval": 30
   },
 
   // ————— GPU Temperature (custom) —————
   "custom/gpu_temp": {
     "format": " {}°C",
     "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader",
-    "interval": 30,
+    "interval": 30
   },
 
   // ————— Memory Usage (built‑in) —————
   "memory": {
     "format": " {used:0.1f}G/{total:0.1f}G",
-    "interval": 5,
+    "interval": 5
   },
 
   // ————— Disk Usage (built‑in) —————
   "disk": {
     "path": "/",
     "format": " {free}",
-    "interval": 60,
+    "interval": 60
   },
 
   // ————— PulseAudio (Volume & Mute) —————
@@ -45,15 +51,15 @@
     "format": "{icon}  {volume}%",
     "format-muted": " muted",
     "format-icons": {
-      "default": ["", "", ""],
+      "default": ["", "", ""]
     },
     "on-click": "pavucontrol",
-    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
   },
 
   // ————— Clock (+ tooltip calendar) —————
   "clock": {
     "format": "<span></span> {:%A, %d %B %Y %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-  },
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  }
 }

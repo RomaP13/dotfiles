@@ -8,8 +8,7 @@
 }
 
 window#waybar {
-  background: transparent;
-  background-color: @crust;
+  background: rgba(17, 17, 27, 0.5); /* Use @crust color */
   color: @overlay0;
   transition-property: background-color;
   transition-duration: 0.1s;
@@ -54,13 +53,13 @@ button:hover {
   background-color: #eb4d4b;
 }
 
+#tray,
 #temperature,
 #custom-gpu_temp,
 #memory,
 #disk,
 #pulseaudio,
-#clock,
-#tray {
+#clock {
   margin-top: 2px;
   margin-bottom: 2px;
   margin-left: 4px;
