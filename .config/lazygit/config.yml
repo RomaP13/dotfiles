@@ -47,7 +47,19 @@ customCommands:
       - type: "confirm"
         title: "Update the committer date for new commits in the current branch"
         body: "You're trying to update the committer date for all commits in the current branch with the author date. Are you sure?"
-    command: "git rebase --committer-date-is-author-date $(git merge-base main HEAD)"
+    command: >
+      bash -c '
+        if git status --porcelain | grep .; then
+          git stash push -u -m "temp-stash-for-rebase";
+          stash_applied=true;
+        else
+          stash_applied=false;
+        fi;
+        git rebase --committer-date-is-author-date $(git merge-base main HEAD) &&
+        if [ "$stash_applied" = true ]; then
+          git stash pop;
+        fi
+      '
     output: log
 git:
   merging:
