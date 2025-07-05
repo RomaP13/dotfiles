@@ -1,5 +1,5 @@
-.config/mpv/watch_later
-.config/tmux/plugins
-.config/mov-cli/.env
-.config/input-remapper-2/presets/Logitech G300s Optical Gaming Mouse/new preset.json
-.config/input-remapper-2/presets/C-Media Electronics Inc. USB Audio Device/new preset.json
+tmux/.config/tmux/plugins
+mpv/.config/mpv/watch_later
+input-remapper-2/.config/input-remapper-2/presets/C-Media Electronics Inc. USB Audio Device
+mov-cli/.config/mov-cli/.env
+input-remapper-2/.config/input-remapper-2/presets/Logitech G300s Optical Gaming Mouse
