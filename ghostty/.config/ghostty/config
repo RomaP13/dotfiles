@@ -1,0 +1,54 @@
+theme = catppuccin-mocha
+
+background = #050211
+background-opacity = 0.7
+
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 15
+
+keybind = clear
+keybind = ctrl+shift+r=reload_config
+keybind = ctrl+shift+t=new_tab
+
+# THINK ABOUT THIS
+# keybind = ctrl+shift+j=goto_split:left
+# keybind = ctrl+shift+semicolon=goto_split:right
+# keybind = ctrl+shift+k=goto_split:up
+# keybind = ctrl+shift+l=goto_split:down
+
+keybind = ctrl+shift+left_bracket=goto_split:previous
+keybind = ctrl+shift+right_bracket=goto_split:next
+keybind = ctrl+shift+j=previous_tab
+keybind = ctrl+shift+k=next_tab
+
+keybind = ctrl+shift+a=select_all
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+
+keybind = ctrl+shift+e=new_split:down
+keybind = ctrl+shift+o=new_split:right
+
+keybind = ctrl+shift+t=new_tab
+keybind = ctrl+shift+w=close_tab
+
+keybind = alt+one=goto_tab:1
+keybind = alt+two=goto_tab:2
+keybind = alt+three=goto_tab:3
+keybind = alt+four=goto_tab:4
+keybind = alt+five=goto_tab:5
+keybind = alt+six=goto_tab:6
+keybind = alt+seven=goto_tab:7
+keybind = alt+eight=goto_tab:8
+keybind = alt+nine=last_tab
+
+keybind = shift+home=scroll_to_top
+keybind = shift+end=scroll_to_bottom
+keybind = shift+insert=paste_from_selection
+keybind = page_up=scroll_page_up
+keybind = page_down=scroll_page_down
+
+keybind = ctrl+shift+enter=toggle_split_zoom
+
+keybind = ctrl+shift+zero=reset_font_size
+keybind = ctrl+shift+minus=decrease_font_size:1
+keybind = ctrl+shift+equal=increase_font_size:1
