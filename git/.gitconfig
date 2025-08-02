@@ -3,3 +3,4 @@
 	name = Roman Pomazan
 [core]
 	editor = nvim
+	quotepath = false
