@@ -7,7 +7,8 @@
     "custom/gpu_temp", // GPU temp
     "memory", // RAM usage
     "disk", // Disk usage
-    "pulseaudio", // Volume & mute
+    "pulseaudio#input", // Microphone
+    "pulseaudio#output", // Volume & mute
     "clock" // Date & time
   ],
 
@@ -46,8 +47,21 @@
     "interval": 60
   },
 
+  // ————— PulseAudio (Microphone) —————
+  "pulseaudio#input": {
+    "format-source": " {volume}%",
+    "format-source-muted": " off",
+    "format": "{format_source}",
+    "scroll-step": 1,
+    "smooth-scrolling-threshold": 1,
+    "max-volume": 100,
+    "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+    "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +1%",
+    "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -1%"
+  },
+
   // ————— PulseAudio (Volume & Mute) —————
-  "pulseaudio": {
+  "pulseaudio#output": {
     "format": "{icon}  {volume}%",
     "format-muted": " muted",
     "format-icons": {
