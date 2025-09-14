@@ -17,11 +17,11 @@ STATE=$(cat "$TOGGLE_STATE_FILE")
 
 # Execute the corresponding command and update the state
 if [ "$STATE" -eq 1 ]; then
-    sudo input-remapper-control --command start --device "GASIA USB KB V11" --preset "mouse"
+    sudo input-remapper-control --command start --device "Hengchangtong  HCT USB Entry Keyboard" --preset "Click"
     notify-send "Remmaper Output" "MAPPING: ON" -t 2000
     echo "2" > "$TOGGLE_STATE_FILE"
 else
-    sudo input-remapper-control --command stop --device "GASIA USB KB V11"
+    sudo input-remapper-control --command stop --device "Hengchangtong  HCT USB Entry Keyboard" --preset "Click"
     notify-send "Remmaper Output" "MAPPING: OFF" -t 2000
     echo "1" > "$TOGGLE_STATE_FILE"
 fi
