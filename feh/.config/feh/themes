@@ -1,0 +1,1 @@
+feh --draw-filename --scale-down --image-bg black --info "echo %wx%h" --action3 "gio trash %F"
