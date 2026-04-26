@@ -55,7 +55,7 @@ customCommands:
         else
           stash_applied=false;
         fi;
-        git rebase --committer-date-is-author-date $(git merge-base main HEAD) &&
+        git rebase --committer-date-is-author-date {{.SelectedLocalCommit.Hash}}^ &&
         if [ "$stash_applied" = true ]; then
           git stash pop;
         fi
