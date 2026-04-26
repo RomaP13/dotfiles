@@ -1,0 +1,10 @@
+toggle_info i
+toggle_exif e
+toggle_filenames d
+
+toggle_fullscreen f
+
+quit q
+
+action_1 x
+action_2 c

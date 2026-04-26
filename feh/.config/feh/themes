@@ -1,1 +1,7 @@
-feh --draw-filename --scale-down --image-bg black --info "echo %wx%h" --action3 "gio trash %F"
+feh --draw-filename \
+    --scale-down \
+    --auto-zoom \
+    --image-bg black \
+    --info "date -r %F '+%%Y-%%m-%%d %%H:%%M'; printf '%wx%h\n%S'" \
+    --action1 "gio trash %F" \
+    --action2 ";[EXIF] exiftool %F"
