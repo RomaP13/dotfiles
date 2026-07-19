@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # NOTE: input-remapper-control requires sudo permissions. So, you need to edit the sudoers file safely: `sudo visudo`
 # and add this line at the bottom: `<your_user> ALL=(ALL) NOPASSWD: /usr/bin/input-remapper-control`
