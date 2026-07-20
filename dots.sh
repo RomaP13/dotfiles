@@ -26,6 +26,11 @@ unlink() {
   fi
 }
 
+make_executable() {
+  log "Making $1 executable"
+  chmod +x "$1"
+}
+
 config_action() {
   local action="$1"
   local app="$2"
@@ -61,6 +66,7 @@ bin_action() {
 
     case "$action" in
         link)
+            make_executable "$src"
             link "$src" "$dst"
             ;;
         unlink)
