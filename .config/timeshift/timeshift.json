@@ -1,29 +1,3 @@
-/*
-sudo cp ./timeshift/timeshift.json /etc/timeshift/timeshift.json
-
-View all existing snapshots with
-  sudo timeshift --list
-Show available backup devices
-  sudo timeshift --list-devices
-
-Create a snapshot with a description
-  sudo timeshift --create --comments "description"
-Create a daily-tagged snapshot
-  sudo timeshift --create --tags D
-
-Interactive restore (prompts for snapshot selection)
-  sudo timeshift --restore
-Non-interactive restore of a specific snapshot
-  sudo timeshift --restore --snapshot 'NAME' --yes
-Restore to a different device (useful when migrating or repairing a system from a live USB):
-  sudo timeshift --restore --snapshot 'NAME' --target /dev/sdx1 --grub /dev/sdx
-
-Delete a specific snapshot
-  sudo timeshift --delete --snapshot 'NAME'
-Delete all snapshots
-  sudo timeshift --delete-all
-*/
-
 {
   "backup_device_uuid": "<device_uuid>",
   "parent_device_uuid": "",
