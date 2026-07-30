@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+LOG_FILE="$HOME/.cache/brightness.log"
+STATE_FILE="$HOME/.cache/brightness-state.txt"
+
+# Initialize state file if it doesn't exist
+if [ ! -f "$STATE_FILE" ]; then
+  INITIAL_BRIGHTNESS=$(ddcutil --brief --bus=4 getvcp 10 2> /dev/null | awk '{print $4}')
+  if [[ "$INITIAL_BRIGHTNESS" =~ ^[0-9]+$ ]]; then
+    echo "$INITIAL_BRIGHTNESS" > "$STATE_FILE"
+  else
+    echo "50" > "$STATE_FILE"
+  fi
+fi
+
+STEP=$1
+CURRENT_BRIGHTNESS=$(cat "$STATE_FILE")
+NEW_BRIGHTNESS=$((CURRENT_BRIGHTNESS + STEP))
+
+if [ "$NEW_BRIGHTNESS" -gt 100 ]; then
+  NEW_BRIGHTNESS=100
+elif [ "$NEW_BRIGHTNESS" -lt 0 ]; then
+  NEW_BRIGHTNESS=0
+fi
+
+# Update state immediately
+echo "$NEW_BRIGHTNESS" > "$STATE_FILE"
+
+# Notify
+notify-send "Brightness: $NEW_BRIGHTNESS"
+
+# Log
+echo "$(date) Script triggered, state=$NEW_BRIGHTNESS" >> "$LOG_FILE"
+
+# Send command to monitor asynchronously in background
+(ddcutil --bus=4 setvcp 10 "$NEW_BRIGHTNESS" > /dev/null 2>&1 &)

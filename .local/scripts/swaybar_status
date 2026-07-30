@@ -1,0 +1,69 @@
+#!/bin/bash
+
+while true; do
+  # CPU Temp
+  cpu_temp=$(cat /sys/class/hwmon/hwmon1/temp1_input)
+  cpu_temp_c=$((cpu_temp / 1000))
+  cpu_icon=""
+  if [ "$cpu_temp_c" -ge 80 ]; then cpu_icon=""; fi
+
+  # GPU Temp
+  gpu_temp_c=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader 2> /dev/null || echo "N/A")
+
+  # Memory Usage
+  mem_used=$(free -h | awk '/^Mem:/ {print $3}' | sed 's/Gi/G/')
+  mem_total=$(free -h | awk '/^Mem:/ {print $2}' | sed 's/Gi/G/')
+
+  # Disk Usage
+  disk_free=$(df -h / | awk 'NR==2 {print $4}')
+
+  # Brightness
+  STATE_FILE="$HOME/.cache/brightness-state.txt"
+  if [ -f "$STATE_FILE" ]; then
+    brightness=$(cat "$STATE_FILE")
+  else
+    brightness=50 # Default value
+  fi
+  brightness_icon=""
+  if [ "$brightness" -lt 10 ]; then
+    brightness_icon="󰃚"
+  elif [ "$brightness" -lt 30 ]; then
+    brightness_icon="󰃛"
+  elif [ "$brightness" -lt 40 ]; then
+    brightness_icon="󰃜"
+  elif [ "$brightness" -lt 50 ]; then
+    brightness_icon="󰃝"
+  elif [ "$brightness" -lt 60 ]; then
+    brightness_icon="󰃞"
+  elif [ "$brightness" -lt 80 ]; then
+    brightness_icon="󰃟"
+  else brightness_icon="󰃠"; fi
+
+  # PulseAudio Microphone (Input)
+  mic_muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+  if [ "$mic_muted" = "yes" ]; then
+    mic_status=" off"
+  else
+    mic_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ | awk 'NR==1 {print $5}' | tr -d '%')
+    mic_status=" ${mic_vol}%"
+  fi
+
+  # PulseAudio Volume (Output)
+  sink_muted=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+  if [ "$sink_muted" = "yes" ]; then
+    vol_status=" muted"
+  else
+    vol_num=$(pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1 {print $5}' | tr -d '%')
+    if [ "$vol_num" -le 30 ]; then vol_icon=""; elif [ "$vol_num" -le 70 ]; then vol_icon=""; else vol_icon=""; fi
+    vol_status="${vol_icon}  ${vol_num}%"
+  fi
+
+  # Clock
+  date_time=$(date +"%A, %d %B %Y %H:%M")
+
+  # Print the final bar string string
+  echo " ${cpu_icon} ${cpu_temp_c}°C |   ${gpu_temp_c}°C |   ${mem_used}/${mem_total} |   ${disk_free} | ${brightness_icon} ${brightness} | ${mic_status} | ${vol_status} |   ${date_time} "
+
+  sleep 5
+
+done

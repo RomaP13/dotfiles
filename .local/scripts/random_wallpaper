@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+SCRIPT=~/.local/bin/pywal16
+
+WALLPAPER=$(
+  find "$WALLPAPER_DIR" \
+    -type f \
+    \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
+    | shuf -n1
+)
+
+wal -i "$WALLPAPER" -o "$SCRIPT"

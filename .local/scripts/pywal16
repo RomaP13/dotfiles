@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# Read the current wallpaper path from Pywal's cache and update the display
+if [ -f "$HOME/.cache/wal/wal" ]; then
+  WALPAPER=$(cat "$HOME/.cache/wal/wal")
+  awww img "$WALPAPER" --transition-type random --transition-step 90
+fi
+
+# Generate the Telegram theme using the new colors/wallpaper
+if command -v walogram > /dev/null; then
+  walogram
+fi
+
+# Update LibreWolf colors via Pywalfox
+/home/roman/.local/bin/pywalfox update
+
+# Compile the full GTK theme
+# if command -v themix-cli > /dev/null; then
+#     themix-cli -o "Pywal" ~/.cache/wal/colors-oomox > /dev/null
+# elif command -v oomox-cli > /dev/null; then
+#     oomox-cli -o "Pywal" ~/.cache/wal/colors-oomox > /dev/null
+# fi
+
+# Tell the system to use the generated theme
+# gsettings set org.gnome.desktop.interface gtk-theme "Pywal"
+
+# Kill the Thunar background daemon so it launches with the fresh theme
+# thunar -q
+
+# Tell Sway to reload the updated colors-sway file dynamically
+if pgrep -x sway > /dev/null; then
+  swaymsg reload
+fi
+
+# Reload Mako to apply the newly generated template colors
+if pgrep -x mako > /dev/null; then
+  makoctl reload
+fi
+
+notify-send -a "System" "Theme Updated" "Colorscheme synchronized."
