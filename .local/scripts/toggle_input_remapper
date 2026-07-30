@@ -5,23 +5,31 @@
 # Replace <your_user> with your actual username, and verify the correct path with:
 # `which input-remapper-control`
 
-echo "$(date) Script triggered, state=$STATE" >> ~/.cache/remap_toggle.log
+DEVICE="Hengchangtong  HCT USB Entry Keyboard"
+PRESET="Click"
 
-TOGGLE_STATE_FILE="$HOME/.cache/toggle-state-remap.txt"
+LOG_FILE="$HOME/.cache/remap-toggle.log"
+STATE_FILE="$HOME/.cache/remap-toggle-state.txt"
 
-if [ ! -f "$TOGGLE_STATE_FILE" ]; then
-  echo "1" > "$TOGGLE_STATE_FILE"
+# Initialize state file if it doesn't exist (default to 0 / OFF)
+if [ ! -f "$STATE_FILE" ]; then
+  echo "0" > "$STATE_FILE"
 fi
 
-STATE=$(cat "$TOGGLE_STATE_FILE")
+CURRENT_STATE=$(cat "$STATE_FILE")
+NEW_STATE=$((1 - CURRENT_STATE))
 
-# Execute the corresponding command and update the state
-if [ "$STATE" -eq 1 ]; then
-    sudo input-remapper-control --command start --device "Hengchangtong  HCT USB Entry Keyboard" --preset "Click"
-    notify-send "Remmaper Output" "MAPPING: ON" -t 2000
-    echo "2" > "$TOGGLE_STATE_FILE"
+# Execute corresponding command and notify
+if [ "$NEW_STATE" -eq 1 ]; then
+  sudo input-remapper-control --command start --device "Hengchangtong  HCT USB Entry Keyboard" --preset "Click"
+  notify-send "Remmaper Output" "MAPPING: ON" -t 2000
 else
-    sudo input-remapper-control --command stop --device "Hengchangtong  HCT USB Entry Keyboard" --preset "Click"
-    notify-send "Remmaper Output" "MAPPING: OFF" -t 2000
-    echo "1" > "$TOGGLE_STATE_FILE"
+  sudo input-remapper-control --command stop --device "$DEVICE" --preset "$PRESET"
+  notify-send "Remmaper Output" "MAPPING: OFF" -t 2000
 fi
+
+# Update state immediately
+echo "$NEW_STATE" > "$STATE_FILE"
+
+# Log
+echo "$(date) Script triggered, state=$NEW_STATE" >> "$LOG_FILE"
