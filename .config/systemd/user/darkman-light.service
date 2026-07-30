@@ -1,0 +1,6 @@
+[Unit]
+Description=Switch Darkman to light mode
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/darkman set light
