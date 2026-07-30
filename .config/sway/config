@@ -1,0 +1,10 @@
+include ~/.cache/wal/colors-sway
+
+include ~/.config/sway/modules/variables.conf
+include ~/.config/sway/modules/theme.conf
+include ~/.config/sway/modules/autostart.conf
+include ~/.config/sway/modules/statusbar.conf
+include ~/.config/sway/modules/devices.conf
+include ~/.config/sway/modules/keymaps.conf
+include ~/.config/sway/modules/windowrules.conf
+include ~/.config/sway/modules/workspaces.conf
