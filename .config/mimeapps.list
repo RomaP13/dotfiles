@@ -1,0 +1,5 @@
+[Default Applications]
+application/toml=nvim-terminal.desktop;
+application/x-shellscript=nvim-terminal.desktop;
+text/plain=nvim-terminal.desktop
+application/pdf=org.pwmt.zathura.desktop
