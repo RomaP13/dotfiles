@@ -19,9 +19,14 @@ fi
 CURRENT_STATE=$(cat "$STATE_FILE")
 NEW_STATE=$((1 - CURRENT_STATE))
 
+# Force ON
+if [ "$1" == "force" ]; then
+  NEW_STATE=1
+fi
+
 # Execute corresponding command and notify
 if [ "$NEW_STATE" -eq 1 ]; then
-  sudo input-remapper-control --command start --device "Hengchangtong  HCT USB Entry Keyboard" --preset "Click"
+  sudo input-remapper-control --command start --device "$DEVICE" --preset "$PRESET"
   notify-send "Remmaper Output" "MAPPING: ON" -t 2000
 else
   sudo input-remapper-control --command stop --device "$DEVICE" --preset "$PRESET"
