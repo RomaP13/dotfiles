@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Neovim (Terminal)
+Comment=Custom definition for kitty -e nvim
+Exec=kitty -e nvim %f
+Icon=nvim
+Type=Application
+Encoding=UTF-8
+Version=1.0
+NoDisplay=true
