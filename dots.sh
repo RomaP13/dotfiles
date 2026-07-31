@@ -1,147 +1,129 @@
 #!/usr/bin/env bash
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-HOME_CONFIG="$HOME/.config"
+HOME_DIR="$HOME"
 
 log() {
   printf '==> %s\n' "$*"
 }
 
 link() {
-  log "Linking $2"
-  ln -sfn "$1" "$2"
+  local src="$1"
+  local dst="$2"
+
+  mkdir -p "$(dirname "$dst")"
+
+  # Auto-chmod scripts
+  if [[ "$src" == *"/.local/scripts/"* && -f "$src" ]]; then
+    log "Making $src executable"
+    chmod +x "$src"
+  fi
+
+  log "Linking $dst -> $src"
+  ln -sfn "$src" "$dst"
 }
 
 unlink() {
-  local path="$1"
+  local dst="$1"
 
-  if [[ -L "$path" ]]; then
-    log "Unlinking $path"
-    rm "$path"
-  elif [[ -e "$path" ]]; then
-    log "$path exists but is not a symlink."
+  if [[ -L "$dst" ]]; then
+    log "Unlinking $dst"
+    rm "$dst"
+  elif [[ -e "$dst" ]]; then
+    log "$dst exists but is not a symlink."
     return 1
   else
-    log "$path is already absent."
+    log "$dst is already absent."
   fi
 }
 
-make_executable() {
-  log "Making $1 executable"
-  chmod +x "$1"
-}
-
-config_action() {
+process_rel() {
   local action="$1"
-  local app="$2"
+  local rel_path="$2"
 
-  local src="$DOTFILES/.config/$app"
-  local dst="$HOME/.config/$app"
+  # Handle special destination overrides
+  local dst_path="$rel_path"
+  if [[ "$rel_path" == "wallpapers" ]]; then
+    dst_path="Pictures/wallpapers"
+  fi
+
+  local src="$DOTFILES/$rel_path"
+  local dst="$HOME_DIR/$dst_path"
+
+  if [[ ! -e "$src" && ! -L "$src" ]]; then
+    log "Source '$src' does not exist."
+    return 1
+  fi
 
   case "$action" in
-    link)
-      if [[ ! -d "$DOTFILES/.config/$app" ]]; then
-        log "Config '$app' does not exist."
-        exit 1
-      fi
-
-      mkdir -p "$HOME_CONFIG"
-
-      link "$src" "$dst"
-      ;;
-    unlink)
-      unlink "$dst"
-      ;;
+    link) link "$src" "$dst" ;;
+    unlink) unlink "$dst" ;;
   esac
 }
 
-bin_action() {
-    local action="$1"
-    local script="$2"
-
-    local src="$DOTFILES/.local/bin/$script"
-    local dst="$HOME/.local/bin/$script"
-
-    mkdir -p "$HOME/.local/bin"
-
-    case "$action" in
-        link)
-            make_executable "$src"
-            link "$src" "$dst"
-            ;;
-        unlink)
-            unlink "$dst"
-            ;;
-    esac
-}
-
-all_configs_action() {
+resolve_and_process() {
   local action="$1"
+  local target="$2"
 
-  mkdir -p "$HOME_CONFIG"
+  # 1. Exact relative path match (e.g. .zshrc, .local/scripts/brightness)
+  if [[ -e "$DOTFILES/$target" ]]; then
+    process_rel "$action" "$target"
+    return
+  fi
 
-  for src in "$DOTFILES/.config"/*; do
-    [[ -d "$src" ]] || continue
-
-    local app="$(basename "$src")"
-    local dst="$HOME_CONFIG/$app"
-
-    case "$action" in
-      link)
-        link "$src" "$dst"
-        ;;
-      unlink)
-        unlink "$dst"
-        ;;
-    esac
-  done
-}
-
-special_action() {
-  local action="$1"
-
-  case "$2" in
-    .bashrc)
-      case "$action" in
-        link)
-          link "$DOTFILES/.bashrc" "$HOME/.bashrc"
-        ;;
-        unlink)
-          unlink "$HOME/.bashrc"
-        ;;
-      esac
+  # 2. Direct directory shortcut
+  case "$target" in
+    scripts)
+      process_rel "$action" ".local/scripts"
+      return
       ;;
-    .zshrc)
-      case "$action" in
-        link)
-          link "$DOTFILES/.zshrc" "$HOME/.zshrc"
-        ;;
-        unlink)
-          unlink "$HOME/.zshrc"
-        ;;
-      esac
-      ;;
-    wallpapers)
-      case "$action" in
-        link)
-          mkdir -p "$HOME/Pictures/wallpapers"
-          link "$DOTFILES/wallpapers" "$HOME/Pictures/wallpapers"
-        ;;
-        unlink)
-          unlink "$HOME/Pictures/wallpapers"
-        ;;
-      esac
+    share)
+      process_rel "$action" ".local/share"
+      return
       ;;
   esac
+
+  # 3. Check inside .config/ (e.g. 'kitty', 'nvim')
+  if [[ -e "$DOTFILES/.config/$target" ]]; then
+    process_rel "$action" ".config/$target"
+    return
+  fi
+
+  # 4. Check inside .local/scripts/ (e.g. 'random_wallpaper' or 'scripts')
+  if [[ -e "$DOTFILES/.local/scripts/$target" ]]; then
+    process_rel "$action" ".local/scripts/$target"
+    return
+  fi
+
+  # 5. Check inside .local/share/ (e.g. 'applications')
+  if [[ -e "$DOTFILES/.local/share/$target" ]]; then
+    process_rel "$action" ".local/share/$target"
+    return
+  fi
+
+  # 6. Handle 'all'
+  if [[ "$target" == "all" ]]; then
+    process_all "$action"
+    return
+  fi
+
+  log "Target '$target' not found in dotfiles."
+  exit 1
 }
 
 usage() {
-  cat <<EOF
+  cat << EOF
 Usage:
-  $0 link all
-  $0 link kitty
-  $0 unlink kitty
-  $0 link .bashrc
+  $0 link <target>
+  $0 unlink <target>
+
+Examples:
+  $0 link all                         # Links everything
+  $0 link scripts                     # Links whole ~/.local/scripts directory
+  $0 link brightness                  # Links single script inside ~/.local/scripts/
+  $0 link applications                # Links ~/.local/share/applications
+  $0 link kitty                       # Links ~/.config/kitty
+  $0 link .zshrc                      # Links ~/.zshrc
 EOF
 }
 
@@ -155,24 +137,14 @@ main() {
   local target="$2"
 
   case "$action" in
-    link|unlink) ;;
+    link | unlink) ;;
     *)
       log "Unknown action: $action"
       exit 1
       ;;
   esac
 
-  if [[ -d "$DOTFILES/.config/$target" ]]; then
-    config_action "$action" "$target"
-  elif [[ -f "$DOTFILES/.local/bin/$target" ]]; then
-    bin_action "$action" "$target"
-  else
-    case "$target" in
-      .bashrc|.zshrc|wallpapers)
-        special_action "$action" "$target"
-        ;;
-    esac
-  fi
+  resolve_and_process "$action" "$target"
 }
 
 main "$@"
