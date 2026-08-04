@@ -8,3 +8,4 @@ include ~/.config/sway/modules/devices.conf
 include ~/.config/sway/modules/keymaps.conf
 include ~/.config/sway/modules/windowrules.conf
 include ~/.config/sway/modules/workspaces.conf
+include ~/.config/sway/modules/swayfx.conf
