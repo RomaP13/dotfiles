@@ -1,0 +1,28 @@
+[general]
+# import = ["~/.config/alacritty/themes/gruvbox_dark.toml"]
+import = ["~/.cache/wal/colors-alacritty.toml"]
+live_config_reload = true
+
+[window]
+opacity = 0.8
+blur = false
+
+[font]
+normal = { family = "IosevkaTerm Nerd Font", style = "Regular"}
+size = 13
+
+[colors]
+transparent_background_colors = true
+
+[mouse]
+hide_when_typing = true
+bindings = [
+  { mouse = "Right", mods = "Control|Shift", action = "Paste" },
+]
+
+[keyboard]
+bindings = [
+  { key = "Back", mods = "Control", chars = "\u0017" },
+  { key = "[",    mods = "Alt",     chars = "~" },
+  { key = "]",    mods = "Alt",     chars = "′" },
+]
