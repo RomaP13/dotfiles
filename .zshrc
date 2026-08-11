@@ -1,16 +1,26 @@
 # Atuin. Bind ctrl-r but not up arrow
+
 eval "$(atuin init zsh --disable-up-arrow)"
 
+# Zoxide
+
+eval "$(zoxide init zsh)"
+
 # Media
+
 export MEDIA="/run/media/roman/OOS750GB"
 
+# Exports
+
+export PATH="$HOME/.local/bin:$PATH"
+
 # Default editor
+
 export EDITOR="nvim"
 
 # Zsh prompt
 
 PS1='%F{blue}%~ %F{magenta}❯%f '
-# PS1='%F{blue}%~ %(?.%F{magenta}❯%f.%F{magenta}❯%f) '
 
 # Aliases
 
@@ -31,18 +41,5 @@ alias ls='ls --color=auto'
 
 alias n='nvim'
 alias grep='grep --color=auto'
-alias tmax='~/dots/tmux/.config/tmux/autostart.sh'
 
-alias twitch='~/Projects/linux-stuff/twitch.sh'
-
-nvimrc() {
-  cd ~/.config/nvim && nvim .
-  cd ~
-}
-
-kittyrc() {
-  cd ~/.config/kitty && nvim kitty.conf
-  cd ~
-}
-
-export PATH="$HOME/.local/bin:$PATH"
+alias dots="~/dotfiles/dots.sh"
