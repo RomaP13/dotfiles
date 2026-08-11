@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+# Ensure user binaries (~/.local/bin) are in PATH
+export PATH="$HOME/.local/bin:$HOME/.local/scripts:$PATH"
+
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
-SCRIPT=~/.local/bin/pywal16
+SCRIPT=~/.local/scripts/pywal16
 
 WALLPAPER=$(
   find "$WALLPAPER_DIR" \
@@ -10,4 +13,4 @@ WALLPAPER=$(
     | shuf -n1
 )
 
-wal -i "$WALLPAPER" -o "$SCRIPT"
+wal -s -i "$WALLPAPER" -o "$SCRIPT"

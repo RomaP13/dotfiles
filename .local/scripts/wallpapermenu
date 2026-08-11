@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-DIRECTORY=~/Pictures/wallpapers/other
-SCRIPT=~/.local/bin/pywal16
+# Ensure user binaries (~/.local/bin) are in PATH
+export PATH="$HOME/.local/bin:$HOME/.local/scripts:$PATH"
+
+DIRECTORY=~/Pictures/wallpapers
+SCRIPT=~/.local/scripts/pywal16
 
 menu() {
   CHOICE=$(swayimg -g "$DIRECTORY")
