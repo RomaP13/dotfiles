@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+LOG_FILE="$HOME/.cache/system-maintenance.log"
+
+mkdir -p "$(dirname "$LOG_FILE")"
+
+log() {
+  printf '[%(%F %T)T] %s\n' -1 "$*" | tee -a "$LOG_FILE"
+}
+
+: "${BACKUP_MOUNT:?BACKUP_MOUNT environment variable is not set.}"
+
+log "========== System maintenance started =========="
+
+log "Checking Arch Linux News..."
+if ! sudo informant check 2>&1 | tee -a "$LOG_FILE"; then
+  log "Unread Arch News detected."
+  log "Run 'sudo informant read' and re-run this script."
+  exit 1
+fi
+
+if command -v timeshift > /dev/null; then
+  log "Creating Timeshift snapshot..."
+
+  sudo timeshift --create \
+    --comments "Pre-update $(date '+%F %T')" \
+    --tags D 2>&1 | tee -a "$LOG_FILE"
+else
+  log "Timeshift is not installed. Skipping snapshot."
+fi
+
+log "Starting backup..."
+"$HOME/.local/scripts/backup-personal"
+
+log "Updating system..."
+yay -Syu 2>&1 | tee -a "$LOG_FILE"
+
+log "Checking for .pacnew files..."
+
+PACNEW_FILES=$(sudo find /etc -name '*.pacnew')
+
+if [[ -n "$PACNEW_FILES" ]]; then
+  log "Found .pacnew files:"
+  printf '%s\n' "$PACNEW_FILES" | tee -a "$LOG_FILE"
+else
+  log "No .pacnew files found."
+fi
+
+read -rp "Reboot now? [y/N] " ans
+
+if [[ "$ans" =~ ^[Yy]$ ]]; then
+  log "Reboot requested by user."
+  log "========== System maintenance finished =========="
+  sudo reboot
+else
+  log "Reboot skipped."
+  log "========== System maintenance finished =========="
+fi

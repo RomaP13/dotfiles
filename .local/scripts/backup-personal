@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+LOG_FILE="$HOME/.cache/backup-personal.log"
+
+mkdir -p "$(dirname "$LOG_FILE")"
+
+log() {
+  printf '[%(%F %T)T] %s\n' -1 "$*" | tee -a "$LOG_FILE"
+}
+
+# Configuration & Arguments
+# Allow passing mount path as first argument: ./backup-personal.sh /path/to/mountpoint
+# Or fallback to environment variable $BACKUP_MOUNT
+BACKUP_MOUNT="${1:-${BACKUP_MOUNT:-}}"
+
+if [[ -z "${BACKUP_MOUNT}" ]]; then
+  log "No backup mount specified."
+  log "Usage: $0 /path/to/mountpoint"
+  log "Or set BACKUP_MOUNT environment variable."
+  exit 1
+fi
+
+RESTIC_REPO="${BACKUP_MOUNT}/restic-repo"
+RESTIC_PASSWORD_FILE="$HOME/.config/restic/repo-password"
+
+TARGETS_FILE="$HOME/.config/restic/backup-targets.txt"
+EXCLUDE_FILE="$HOME/.config/restic/backup-excludes.txt"
+
+# Pre-Flight Checks
+if ! command -v restic &> /dev/null; then
+  log "restic is not installed." >&2
+  exit 1
+fi
+
+if [[ ! -d "${BACKUP_MOUNT}" ]]; then
+  log "External drive is not mounted at ${BACKUP_MOUNT}" >&2
+  exit 1
+fi
+
+if [[ ! -f "${RESTIC_PASSWORD_FILE}" ]]; then
+  log "Password file not found at ${RESTIC_PASSWORD_FILE}" >&2
+  exit 1
+fi
+
+if [[ ! -f "${TARGETS_FILE}" ]]; then
+  log "Backup targets file not found at ${TARGETS_FILE}"
+  exit 1
+fi
+
+if [[ ! -f "${EXCLUDE_FILE}" ]]; then
+  log "WARNING: Exclusion file not found at ${EXCLUDE_FILE}"
+fi
+
+# Restic Operations
+mapfile -t TARGETS < <(
+  grep -vE '^\s*($|#)' "$TARGETS_FILE" \
+    | sed "s|^~|$HOME|"
+)
+export RESTIC_REPOSITORY="${RESTIC_REPO}"
+export RESTIC_PASSWORD_FILE="${RESTIC_PASSWORD_FILE}"
+
+log "========== Backup started =========="
+
+log "Dry run..."
+
+restic backup \
+  --exclude-file="${EXCLUDE_FILE}" \
+  --exclude-caches \
+  --one-file-system \
+  --dry-run \
+  --verbose \
+  "${TARGETS[@]}" 2>&1 | tee -a "$LOG_FILE"
+
+read -rp "Do you want to continue? [y/N] " ans
+
+if [[ "$ans" =~ ^[Yy]$ ]]; then
+  log "Dry run completed. Starting backup..."
+else
+  log "Backup cancelled by user."
+  exit 0
+fi
+
+restic backup \
+  --exclude-file="${EXCLUDE_FILE}" \
+  --exclude-caches \
+  --one-file-system \
+  --tag "manual-run" \
+  "${TARGETS[@]}" 2>&1 | tee -a "$LOG_FILE"
+
+log "Checking repository integrity..."
+restic check 2>&1 | tee -a "$LOG_FILE"
+
+log "========== Backup finished =========="
