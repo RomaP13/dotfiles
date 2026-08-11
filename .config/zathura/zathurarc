@@ -1,2 +1,5 @@
+# Before use: ln -sf ~/.cache/wal/colors-zathura ~/.config/zathura/colors-zathura
+include colors-zathura
+
 # Enable copy to clipboard
-set selection-clipboard clipboard
+# set selection-clipboard clipboard
