@@ -1,0 +1,12 @@
+# Personal data
+~/Documents
+~/Pictures
+~/Projects
+
+# Configuration
+~/.config
+
+# Secrets
+~/.gnupg
+~/.password-store
+~/.ssh

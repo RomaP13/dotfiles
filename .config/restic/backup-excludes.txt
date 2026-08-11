@@ -1,0 +1,22 @@
+# Caches & Trash
+.cache
+.local/share/Trash
+.thumbnails
+
+# Node / JS
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Rust / Go
+/target/
+go/pkg/
+
+# System / IDE temporary files
+.DS_Store
+*.tmp
+*.log
