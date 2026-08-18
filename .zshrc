@@ -8,7 +8,7 @@ eval "$(zoxide init zsh)"
 
 # Media
 
-export MEDIA="/run/media/roman/OOS750GB"
+export MEDIA="/run/media/roman/OOS750G"
 
 # Exports
 
@@ -43,3 +43,22 @@ alias n='nvim'
 alias grep='grep --color=auto'
 
 alias dots="~/dotfiles/dots.sh"
+
+# Useful commands
+
+cdf() {
+  local dir
+  dir=$(find . -type d 2> /dev/null | fzf) || return
+  cd -- "$dir" || exit
+}
+
+editbook() {
+  local file="$1"
+  local mtime
+  mtime=$(stat -c %y "$file")
+  echo "Saved: $mtime"
+
+  nvim "$file"
+
+  touch -m -d "$mtime" "$file"
+}
