@@ -1,40 +1,51 @@
 #!/usr/bin/env bash
 
+LOG_FILE="$HOME/.cache/pywal16.log"
+
+log_time() {
+  local name="$1"
+  local start="$2"
+  local end
+  end=$(date +%s%N)
+  printf "[%(%F %T)T] %-15s %8.2f ms\n" -1 "$name" "$(((end - start) / 1000000))" >> "$LOG_FILE"
+}
+
+script_start=$(date +%s%N)
+
 # Read the current wallpaper path from Pywal's cache and update the display
 if [ -f "$HOME/.cache/wal/wal" ]; then
-  WALPAPER=$(cat "$HOME/.cache/wal/wal")
+  start=$(date +%s%N)
+  WALPAPER=$(< "$HOME/.cache/wal/wal")
   awww img "$WALPAPER" --transition-type random --transition-step 90
+  log_time "awww" "$start"
 fi
 
 # Generate the Telegram theme using the new colors/wallpaper
 if command -v walogram > /dev/null; then
-  walogram
-fi
-
-# Update LibreWolf colors via Pywalfox
-/home/roman/.local/bin/pywalfox update
-
-# Compile the full GTK theme
-# if command -v themix-cli > /dev/null; then
-#     themix-cli -o "Pywal" ~/.cache/wal/colors-oomox > /dev/null
-# elif command -v oomox-cli > /dev/null; then
-#     oomox-cli -o "Pywal" ~/.cache/wal/colors-oomox > /dev/null
-# fi
-
-# Tell the system to use the generated theme
-# gsettings set org.gnome.desktop.interface gtk-theme "Pywal"
-
-# Kill the Thunar background daemon so it launches with the fresh theme
-# thunar -q
-
-# Tell Sway to reload the updated colors-sway file dynamically
-if pgrep -x sway > /dev/null; then
-  swaymsg reload
+  (
+    start=$(date +%s%N)
+    walogram -B > /dev/null 2>&1
+    log_time "walogram" "$start"
+  ) &
 fi
 
 # Reload Mako to apply the newly generated template colors
 if pgrep -x mako > /dev/null; then
+  start=$(date +%s%N)
   makoctl reload
+  log_time "mako reload" "$start"
 fi
 
+# Tell Sway to reload the updated colors-sway file dynamically
+if pgrep -x sway > /dev/null; then
+  start=$(date +%s%N)
+  swaymsg reload
+  log_time "sway reload" "$start"
+fi
+
+start=$(date +%s%N)
 notify-send -a "System" "Theme Updated" "Colorscheme synchronized."
+log_time "notify-send" "$start"
+
+log_time "TOTAL" "$script_start"
+echo >> "$LOG_FILE"
