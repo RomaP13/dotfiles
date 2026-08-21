@@ -1,0 +1,33 @@
+#!/bin/bash
+
+SAVE_DIR="$MEDIA/Videos/YouTube"
+mkdir -p "$SAVE_DIR"
+
+echo "Enter path to your urls.txt file:"
+read -r url_file
+
+if [ ! -f "$url_file" ]; then
+  echo "File not found: $url_file"
+  exit 1
+fi
+
+if [ ! -s "$url_file" ]; then
+  echo "File is empty: $url_file"
+  exit 1
+fi
+
+echo "Starting batch download from $url_file ..."
+echo "----------------------------------------"
+
+yt-dlp --paths "$SAVE_DIR" \
+  --cookies ~/.cookies/cookies.txt \
+  --js-runtimes node \
+  --merge-output-format mp4 \
+  --embed-thumbnail \
+  --embed-metadata \
+  --format "bv*[height<=1440]+ba/b[height<=1440]" \
+  --no-playlist \
+  --batch-file "$url_file"
+
+echo "----------------------------------------"
+echo "Batch finished."

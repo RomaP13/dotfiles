@@ -1,0 +1,22 @@
+#!/bin/bash
+
+SAVE_DIR="$MEDIA/Videos/YouTube"
+mkdir -p "$SAVE_DIR"
+
+echo "Enter URL: "
+read -r url
+
+echo "Starting download from $url ..."
+echo "----------------------------------------"
+
+yt-dlp --paths "$SAVE_DIR" \
+  --cookies ~/.cookies/cookies.txt \
+  --js-runtimes node \
+  --merge-output-format mp4 \
+  --embed-thumbnail \
+  --embed-metadata \
+  --format "bv*[height<=1440]+ba/b[height<=1440]" \
+  "$url"
+
+echo "----------------------------------------"
+echo "Done!"
