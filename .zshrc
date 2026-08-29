@@ -8,7 +8,7 @@ eval "$(zoxide init zsh)"
 
 # Media
 
-export MEDIA="/run/media/roman/OOS750G"
+export MEDIA="/mnt/OOS750G"
 
 # Exports
 
@@ -27,8 +27,8 @@ PS1='%F{blue}%~ %F{magenta}❯%f '
 alias clera='clear'
 alias download-movie-cover='yarn node ~/Projects/js-imdb-parser/main.js'
 alias download-movie-cover='~/Projects/imdb-parser/.venv/bin/python3 ~/Projects/imdb-parser/main.py'
-alias download='~/.local/bin/downloader.sh'
-alias download_many='~/.local/bin/batch_downloader.sh'
+alias download='~/.local/scripts/downloader'
+alias download_many='~/.local/scripts/batch-downloader'
 
 alias gl='git log'
 alias glg='git log --graph --pretty=format:'\''%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --abbrev-commit'
