@@ -12,3 +12,5 @@ wallpapers/
 
 .config/restic/repo-password
 .config/xfce4/xfconf/xfce-perchannel-xml
+
+.config/systemd/user/default.target.wants/
