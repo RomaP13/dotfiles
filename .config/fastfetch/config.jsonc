@@ -106,7 +106,8 @@
     {
       "type": "disk",
       "key": "{$10}└   HDD       ",
-      "folders": ["/run/media/roman/OOS750G"],
+      "folders": ["/mnt/OOS750G"],
+      "hideFS": ["autofs"],
       "percent": {
         "type": 3, // 3 = show number + bar + percentage
         "green": 30, // <30% is green
