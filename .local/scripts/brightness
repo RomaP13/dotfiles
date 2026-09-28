@@ -27,7 +27,7 @@ fi
 echo "$NEW_BRIGHTNESS" > "$STATE_FILE"
 
 # Notify
-notify-send "Brightness: $NEW_BRIGHTNESS"
+notify-send -t 500 "Brightness: $NEW_BRIGHTNESS"
 
 # Log
 echo "$(date) Script triggered, state=$NEW_BRIGHTNESS" >> "$LOG_FILE"

@@ -8,7 +8,7 @@ IS_MUTED=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
 
 # Show notification
 if [ "$IS_MUTED" = "yes" ]; then
-  notify-send "Microphone" "Muted" -t 2000
+  notify-send -t 500 "Microphone" "Muted"
 else
-  notify-send "Microphone" "Unmuted" -t 2000
+  notify-send -t 500 "Microphone" "Unmuted"
 fi

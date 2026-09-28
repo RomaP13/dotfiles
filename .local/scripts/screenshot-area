@@ -2,4 +2,4 @@
 
 grim -g "$(slurp)" - | wl-copy
 
-notify-send -e "Screenshot copied"
+notify-send -t 1000 -e "Screenshot copied"

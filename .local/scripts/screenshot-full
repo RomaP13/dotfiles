@@ -2,4 +2,4 @@
 
 grim "$HOME/Pictures/Screenshots/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png"
 
-notify-send -e "Screenshot taken"
+notify-send -t 1000 -e "Screenshot taken"
