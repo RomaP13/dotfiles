@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+grim -T "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).foreign_toplevel_identifier')" - | wl-copy
+
+notify-send -t 1000 -e "Screenshot copied"
