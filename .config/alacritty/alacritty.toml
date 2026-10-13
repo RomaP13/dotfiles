@@ -4,7 +4,7 @@ import = ["~/.cache/wal/colors-alacritty.toml"]
 live_config_reload = true
 
 [window]
-opacity = 0.8
+opacity = 0.85
 blur = false
 
 [font]
@@ -23,6 +23,4 @@ bindings = [
 [keyboard]
 bindings = [
   { key = "Back", mods = "Control", chars = "\u0017" },
-  { key = "[",    mods = "Alt",     chars = "~" },
-  { key = "]",    mods = "Alt",     chars = "′" },
 ]
